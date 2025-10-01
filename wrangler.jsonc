@@ -1,0 +1,16 @@
+{
+  "compatibility_date": "2025-04-01",
+  "main": "src/index.ts",
+  "name": "miredata-webhook",
+  "upload_source_maps": true,
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "webhook",
+      "database_id": "27a3bc3b-a714-4ede-97a5-51f2f94939df"
+    }
+  ]
+}
