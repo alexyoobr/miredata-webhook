@@ -41,7 +41,7 @@ export const cnpj = z.object({
 
 export const CnpjModel = {
   tableName: "cnpj",
-  primaryKeys: ["id"],
+  primaryKeys: ["cnpj"],
   schema: cnpj,
   serializer: (obj: Record<string, string | number | boolean>) => {
     return {

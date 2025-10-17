@@ -10,6 +10,6 @@ export const cnpjRouter = fromHono(new Hono());
 
 cnpjRouter.get("/", CnpjList);
 cnpjRouter.post("/", CnpjCreate);
-cnpjRouter.get("/:id", CnpjRead);
-cnpjRouter.put("/:id", CnpjUpdate);
-cnpjRouter.delete("/:id", CnpjDelete);
+cnpjRouter.get("/:cnpj", CnpjRead);
+cnpjRouter.put("/:cnpj", CnpjUpdate);
+cnpjRouter.delete("/:cnpj", CnpjDelete);
