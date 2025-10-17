@@ -1,0 +1,58 @@
+import { z } from "zod";
+
+export const cnpj = z.object({
+  id: z.number().int(),
+  cnpj: z.string(),
+  dataabertura: z.string().optional(),
+  atividade: z.string().optional(),
+  isativo: z.boolean().optional(),
+  bairro: z.string().optional(),
+  cancelado: z.boolean().optional(),
+  capitalsocial: z.number().optional(),
+  cep: z.string().optional(),
+  cidade: z.string().optional(),
+  complemento: z.string().optional(),
+  created: z.string().optional(),
+  ddd: z.string().optional(),
+  email: z.string().email().optional(),
+  fantasia: z.string().optional(),
+  fone: z.string().optional(),
+  cidadeid: z.number().int().optional(),
+  paisid: z.number().int().optional(),
+  ie: z.string().optional(),
+  ln: z.string().optional(),
+  logradouro: z.string().optional(),
+  ismei: z.boolean().optional(),
+  nome: z.string().optional(),
+  numero: z.string().optional(),
+  isjuridica: z.boolean().optional(),
+  porte: z.string().optional(),
+  regime: z.string().optional(),
+  issimples: z.boolean().optional(),
+  situacaocnpj: z.string().optional(),
+  situacaoie: z.string().optional(),
+  status: z.string().optional(),
+  suframa: z.string().optional(),
+  tipo: z.string().optional(),
+  uf: z.string().optional(),
+  updated: z.string().optional(),
+  memo3: z.string().optional(),
+});
+
+export const CnpjModel = {
+  tableName: "cnpj",
+  primaryKeys: ["id"],
+  schema: cnpj,
+  serializer: (obj: Record<string, string | number | boolean>) => {
+    return {
+      ...obj,
+      isativo: obj.isativo !== undefined ? Boolean(obj.isativo) : undefined,
+      cancelado: obj.cancelado !== undefined ? Boolean(obj.cancelado) : undefined,
+      ismei: obj.ismei !== undefined ? Boolean(obj.ismei) : undefined,
+      issimples: obj.issimples !== undefined ? Boolean(obj.issimples) : undefined,
+      isjuridica: obj.isjuridica !== undefined ? Boolean(obj.isjuridica) : undefined,
+      capitalsocial: obj.capitalsocial !== undefined ? Number(obj.capitalsocial) : undefined,
+    };
+  },
+  serializerObject: cnpj,
+};
