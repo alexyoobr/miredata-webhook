@@ -33,11 +33,12 @@ export class CnpjCreate extends OpenAPIRoute {
       };
     }
 
-    // Only include provided fields; exclude id/created/updated
+    // Only include provided fields with defined values; exclude id/created/updated
     const disallowed = new Set(["id", "created", "updated"]);
-    const insertCols = Object.keys(body).filter((k) => !disallowed.has(k));
+    const entries = Object.entries(body).filter(([k, v]) => !disallowed.has(k) && v !== undefined);
+    const insertCols = entries.map(([k]) => k);
     const placeholders = insertCols.map(() => "?").join(", ");
-    const values = insertCols.map((k) => body[k]);
+    const values = entries.map(([, v]) => v);
 
     // For update, only set provided fields (except cnpj) and always bump updated
     const updateCols = insertCols.filter((k) => k !== "cnpj");

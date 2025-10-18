@@ -14,7 +14,15 @@ export const cnpj = z.object({
   complemento: z.string().optional(),
   created: z.string().optional(),
   ddd: z.string().optional(),
-  email: z.string().email().nullish(),
+  email: z.preprocess((val) => {
+    if (val === null || val === undefined) return val;
+    if (typeof val === "string") {
+      const t = val.trim();
+      if (t === "") return undefined; // treat empty string as undefined
+      if (t.toLowerCase() === "null") return null; // treat "null" string as null
+    }
+    return val;
+  }, z.string().email().nullish()),
   fantasia: z.string().optional(),
   fone: z.string().optional(),
   whatsapp: z.string().optional(),
