@@ -8,7 +8,7 @@ export class CnpjCreate extends OpenAPIRoute {
     summary: "Create or update CNPJ by cnpj (upsert)",
     request: {
       body: contentJson(
-        CnpjModel.schema.omit({ id: true, created: true, updated: true }),
+        CnpjModel.schema.omit({ id: true, created: true }),
       ),
     },
     responses: {
@@ -33,18 +33,17 @@ export class CnpjCreate extends OpenAPIRoute {
       };
     }
 
-    // Only include provided fields with defined values; exclude id/created/updated
-    const disallowed = new Set(["id", "created", "updated"]);
+    // Only include provided fields with defined values; exclude id/created
+    const disallowed = new Set(["id", "created"]);
     const entries = Object.entries(body).filter(([k, v]) => !disallowed.has(k) && v !== undefined);
     const insertCols = entries.map(([k]) => k);
     const placeholders = insertCols.map(() => "?").join(", ");
     const values = entries.map(([, v]) => v);
 
-    // For update, only set provided fields (except cnpj) and always bump updated
+    // For update, only set provided fields (except cnpj); no auto bump of updated
     const updateCols = insertCols.filter((k) => k !== "cnpj");
     const updateAssignments = [
       ...updateCols.map((k) => `${k}=excluded.${k}`),
-      `updated=CURRENT_TIMESTAMP`,
     ].join(", ");
 
     const sql = `INSERT INTO cnpj (${insertCols.join(", ")})\n                 VALUES (${placeholders})\n                 ON CONFLICT(cnpj) DO UPDATE SET ${updateAssignments}`;
